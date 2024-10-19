@@ -1,2 +1,2 @@
 # RiverpodPractice
-A riverpod app for learning how to dynamically update user information.
+An app using Riverpod for updating user information.
