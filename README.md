@@ -1,2 +1,2 @@
 # RiverpodPractice
-A counter app to learn how to use riverpod practically.
+A riverpod app for learning how to dynamically update user information.
