@@ -1,38 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_practice/model/rp_user.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class RPHomePage extends ConsumerWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  RPHomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // RPUser の状態を監視
+    final RPUser rpUser = ref.watch(rpUserProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Riverpod Practice"),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Name: ${rpUser.name}', style: TextStyle(fontSize: 24)),
+            Text('Age: ${rpUser.age}', style: TextStyle(fontSize: 24)),
+            SizedBox(height: 20),
+            // 名前の入力フィールド
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Enter Name'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            // 年齢の入力フィールド
+            TextField(
+              controller: ageController,
+              decoration: InputDecoration(labelText: 'Enter Age'),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 20),
+            // 更新ボタン
+            ElevatedButton(
+              onPressed: () {
+                // ユーザー情報を変更
+                final enteredName = nameController.text; // 入力された名前
+                final selectedAge = int.tryParse(ageController.text) ??
+                    rpUser.age; // 入力された年齢を数値に変換
+
+                // ユーザー情報を更新するメソッドを呼び出す
+                ref.read(rpUserProvider.notifier).updateUser(
+                      enteredName: enteredName,
+                      selectedAge: selectedAge,
+                    );
+              },
+              child: Text('Update User'),
             ),
           ],
         ),
