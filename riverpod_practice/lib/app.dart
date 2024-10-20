@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_practice/view/home_page.dart';
+import 'package:riverpod_practice/view/show_management_structure_page.dart';
 
 class RiverpodPractice extends StatelessWidget {
   const RiverpodPractice({super.key});
