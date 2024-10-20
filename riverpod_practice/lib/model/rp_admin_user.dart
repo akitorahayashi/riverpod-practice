@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_practice/model/rp_user.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // クラスの定義
 class RPAdminUser extends RPUser {
