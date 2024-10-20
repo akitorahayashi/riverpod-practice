@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_practice/model/rp_user.dart';
+import 'package:riverpod_practice/constant/rp_textstyle.dart';
+import 'package:riverpod_practice/model/rp_admin_user.dart';
 
 class RPHomePage extends ConsumerWidget {
   final TextEditingController nameController = TextEditingController();
@@ -11,7 +12,7 @@ class RPHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // RPUser の状態を監視
-    final RPUser rpUser = ref.watch(rpUserProvider);
+    final RPAdminUser rpUser = ref.watch(rpUserProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -20,13 +21,13 @@ class RPHomePage extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            Text('Name: ${rpUser.name}', style: TextStyle(fontSize: 24)),
-            Text('Age: ${rpUser.age}', style: TextStyle(fontSize: 24)),
-            SizedBox(height: 20),
+            Text('Name: ${rpUser.name}',
+                style: RPTextstyle.detailProfileTextStyle),
+            Text('Age: ${rpUser.age}',
+                style: RPTextstyle.detailProfileTextStyle),
+            const SizedBox(height: 20),
             // 名前の入力フィールド
             TextField(
               controller: nameController,
