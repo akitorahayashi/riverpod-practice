@@ -2,7 +2,6 @@ import 'package:riverpod_practice/model/external/pref_service.dart';
 import 'package:riverpod_practice/model/rp_user.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:convert';
 
@@ -45,7 +44,7 @@ class RPUserNotifier extends StateNotifier<
   RPUserNotifier()
       : super(RPAdminUser(name: '', age: 20)) /* 初期stateをRPUserで指定 */ {
     // sharedPreferenceからデータを取得
-    PrefService().pref.then((pref) {
+    PrefService().sharedPreferences.then((pref) {
       final savedAdminUser = pref.getString("rpAdminUser");
       if (savedAdminUser != null) {
         final readAdminUser = RPAdminUser.fromJson(json.decode(pref.getString(
@@ -58,10 +57,7 @@ class RPUserNotifier extends StateNotifier<
   // adminUser状態を操作するメソッド
   void updateAdminUser({required RPAdminUser newAdminUser}) {
     state = newAdminUser;
-    PrefService.pref.then((pref) {
-      pref.setString("rpAdminUser", json.encode(newAdminUser.toJson()));
-    });
-    PrefService.pref.then((pref) {
+    PrefService().sharedPreferences.then((pref) {
       pref.setString("rpAdminUser", json.encode(newAdminUser.toJson()));
     });
   }

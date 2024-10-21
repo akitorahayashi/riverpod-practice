@@ -3,9 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_practice/app.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: RiverpodPractice(),
-    ),
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const ProviderScope(
+    child: RiverpodPractice(),
+  ));
 }
