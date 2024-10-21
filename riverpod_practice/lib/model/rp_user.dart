@@ -10,9 +10,20 @@ class RPUser {
   RPUser({required this.name, required this.age});
 }
 
-final rpUserProvider = StateNotifierProvider<RPUserNotifier, List<RPUser>>(
-  (ref) => RPUserNotifier(),
-);
+final rpUserProvider =
+    StateNotifierProvider.autoDispose<RPUserNotifier, int>((ref) {
+  return RPUserNotifier();
+});
+
+final counterProvider = StateNotifierProvider<CounterNotifier, int>((ref) {
+  final notifier = CounterNotifier();
+
+  ref.onDispose(() {
+    notifier.dispose(); // 明示的にクリーンアップを行う
+  });
+
+  return notifier;
+});
 
 class RPUserNotifier extends StateNotifier<List<RPUser>> {
   RPUserNotifier() : super([]);

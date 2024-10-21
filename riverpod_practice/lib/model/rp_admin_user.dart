@@ -12,9 +12,10 @@ class RPAdminUser extends RPUser {
 }
 
 // Provider
-final rpAdminUserProvider = StateNotifierProvider<RPUserNotifier, RPAdminUser>
-    /* StateNotifierProviderの第一引数はNotifier、第二引数は提供するstateの型 */
-    ((ref) {
+final rpAdminUserProvider =
+    StateNotifierProvider.autoDispose<RPUserNotifier, RPAdminUser>(
+        /* StateNotifierProviderの第一引数はNotifier、第二引数は提供するstateの型 */
+        (ref) {
   return RPUserNotifier();
 });
 
