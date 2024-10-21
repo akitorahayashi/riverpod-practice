@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_practice/model/rp_admin_user.dart';
+import 'package:riverpod_practice/model/rp_user.dart';
+import 'package:riverpod_practice/view/employees_block.dart';
 import 'package:riverpod_practice/view/manager_block.dart';
 
 class RPHomePage extends ConsumerWidget {
@@ -8,6 +9,7 @@ class RPHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final List<RPUser> rpUsers = ref.watch(rpUsersProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -18,8 +20,22 @@ class RPHomePage extends ConsumerWidget {
         child: ListView(
           children: [
             ManagerBlock(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              child: Center(
+                child: Text("-  Employees  -", style: TextStyle(fontSize: 20)),
+              ),
+            ),
+            ...List.generate(
+              rpUsers.length,
+              (index) => EmployeeBlock(indexInrpUsers: index),
+            ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                ref
+                    .read(rpUsersProvider.notifier)
+                    .addUser(RPUser(name: 'Guest', age: 20));
+              },
               child: const Icon(Icons.add),
             ),
           ],

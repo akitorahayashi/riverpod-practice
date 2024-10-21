@@ -10,20 +10,21 @@ class RPUser {
   RPUser({required this.name, required this.age});
 }
 
-final rpUserProvider =
-    StateNotifierProvider.autoDispose<RPUserNotifier, int>((ref) {
+final rpUsersProvider =
+    StateNotifierProvider.autoDispose<RPUserNotifier, List<RPUser>>((ref) {
   return RPUserNotifier();
 });
 
-final counterProvider = StateNotifierProvider<CounterNotifier, int>((ref) {
-  final notifier = CounterNotifier();
+// 自分でカスタマイズしたdisposeを実装する場合
+// final counterProvider = StateNotifierProvider<RPUserNotifier, int>((ref) {
+//   final notifier = RPUserNotifier();
 
-  ref.onDispose(() {
-    notifier.dispose(); // 明示的にクリーンアップを行う
-  });
+//   ref.onDispose(() {
+//     notifier.dispose();
+//   });
 
-  return notifier;
-});
+//   return notifier;
+// });
 
 class RPUserNotifier extends StateNotifier<List<RPUser>> {
   RPUserNotifier() : super([]);
@@ -39,9 +40,11 @@ class RPUserNotifier extends StateNotifier<List<RPUser>> {
   }
 
   // ユーザーを更新するメソッド
-  void updateUser(String oldId, RPUser updatedUser) {
-    state = state
-        .map((user) => user.id == oldId ? updatedUser : user)
-        .toList(); // ID が一致するユーザーを更新
+  void updateUser({required int indexInUsers, required RPUser updatedUser}) {
+    // リスト全体を新しいリストとして再設定することで再描画をトリガーする
+    state = [
+      for (int i = 0; i < state.length; i++)
+        if (i == indexInUsers) updatedUser else state[i],
+    ];
   }
 }

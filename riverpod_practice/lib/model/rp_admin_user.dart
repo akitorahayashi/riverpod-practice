@@ -26,8 +26,7 @@ class RPUserNotifier extends StateNotifier<
       : super(RPAdminUser(name: '', age: 20)) /* 初期stateをRPUserで指定 */;
 
   // adminUser状態を操作するメソッド
-  void updateAdminUser(
-      {required String enteredName, required int selectedAge}) {
-    state = RPAdminUser(name: enteredName, age: selectedAge);
+  void updateAdminUser({required RPAdminUser newAdminUser}) {
+    state = newAdminUser;
   }
 }
