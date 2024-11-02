@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_practice/constant/rp_textstyle.dart';
 import 'package:riverpod_practice/model/rp_admin_user.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ManagerBlock extends ConsumerWidget {
   final TextEditingController _nameInputController = TextEditingController();
