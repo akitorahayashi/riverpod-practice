@@ -44,7 +44,7 @@ class RPUserNotifier extends StateNotifier<
   RPUserNotifier()
       : super(RPAdminUser(name: '', age: 20)) /* 初期stateをRPUserで指定 */ {
     // sharedPreferenceからデータを取得
-    PrefService().sharedPreferences.then((pref) {
+    PrefService().getPref.then((pref) {
       final savedAdminUser = pref.getString("rpAdminUser");
       if (savedAdminUser != null) {
         final readAdminUser = RPAdminUser.fromJson(json.decode(pref.getString(
@@ -57,7 +57,7 @@ class RPUserNotifier extends StateNotifier<
   // adminUser状態を操作するメソッド
   void updateAdminUser({required RPAdminUser newAdminUser}) {
     state = newAdminUser;
-    PrefService().sharedPreferences.then((pref) {
+    PrefService().getPref.then((pref) {
       pref.setString("rpAdminUser", json.encode(newAdminUser.toJson()));
     });
   }
